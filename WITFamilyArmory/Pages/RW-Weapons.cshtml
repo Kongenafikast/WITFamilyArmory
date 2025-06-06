@@ -1,0 +1,192 @@
+﻿@page
+@model WITFamilyArmory.Pages.RW_WeaponsModel
+@{
+    ViewData["Title"] = "Weapons";
+}
+
+<h2>Weapons List</h2>
+
+<div class="row">
+    <div class="col-10">
+        <form method="get">
+            <label>Item:</label>
+            <select asp-for="ItemFilter">
+                <option value="">All</option>
+                @foreach (var item in Model.ItemOptions)
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+
+            <label>Bouns:</label>
+            <select asp-for="BounsFilter">
+                <option value="">All</option>
+                @foreach (var b in Model.BounsOptions)
+                {
+                    <option value="@b">@b</option>
+                }
+            </select>
+
+            <label>Type:</label>
+            <select asp-for="TypeFilter">
+                <option value="">All</option>
+                @foreach (var t in Model.TypeOptions)
+                {
+                    <option value="@t">@t</option>
+                }
+            </select>
+
+            <button type="submit">Filter</button>
+        </form>
+    </div>
+    @if (Model.LoggedOn)
+    {
+        <div class="col-2" id="newBTNRow">
+            <a href="#" class="btn btn-light bollBtn" id="btnNewWeapon">New</a>
+        </div>
+    }
+</div>
+
+<table class="table">
+    <thead>
+        @if (Model.LoggedOn)
+        {
+            <tr>
+                <th>Item</th>
+                <th>Bouns1</th>
+                <th>Bouns1 in %</th>
+                <th>Bouns2</th>
+                <th>Bouns2 in %</th>
+                <th>Type</th>
+                <th>Location</th>
+                <th>Quality</th>
+                <th>Damage</th>
+                <th>Accuracy</th>
+                <th>Owner</th>
+                <th>Action</th>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <th>Item</th>
+                <th>Bouns1</th>
+                <th>Bouns1 in %</th>
+                <th>Bouns2</th>
+                <th>Bouns2 in %</th>
+                <th>Type</th>
+                <th>Location</th>
+                <th>Quality</th>
+                <th>Damage</th>
+                <th>Accuracy</th>
+            </tr>
+        }
+    </thead>
+    <tbody>
+        @foreach (var weapon in Model.FilteredWeapons)
+        {
+            <tr>
+                @if (Model.LoggedOn)
+                {
+                    <td>
+                        <a href="#" class="weapon-item"
+                           data-id="@weapon.Id"
+                           data-item="@weapon.Item"
+                           data-bouns1="@weapon.Bouns1"
+                           data-bouns1pct="@weapon.Bouns1pct"
+                           data-bouns2="@weapon.Bouns2"
+                           data-bouns2pct="@weapon.Bouns2pct"
+                           data-type="@weapon.Type"
+                           data-lokation="@weapon.Lokation"
+                           data-owner="@weapon.Owner"
+                           data-quality="@weapon.Quality"
+                           data-damage="@weapon.Damage"
+                           data-accuracy="@weapon.Accuracy">
+                            @weapon.Item
+                        </a>
+                    </td>
+                }
+                else
+                {
+                    <td>@weapon.Item</td>
+                }
+                <td>@weapon.Bouns1</td>
+                <td>@weapon.Bouns1pct</td>
+                <td>@weapon.Bouns2</td>
+                <td>@weapon.Bouns2pct</td>
+                <td>@weapon.Type</td>
+                <td>@weapon.Lokation.Name</td>
+                <td>@weapon.Quality</td>
+                <td>@weapon.Damage</td>
+                <td>@weapon.Accuracy</td>
+                @if (Model.LoggedOn)
+                {
+                    <td>@weapon.Owner</td>
+                    <td>
+                        <form method="post" asp-page-handler="Delete" asp-route-idForDelete="@weapon.Id">
+                            <input type="hidden" name="id" id="delete-id" />
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div id="overlayNew" class="overlay" style="display:none;">
+    <div class="overlay-content">
+        <h2>New Weapon</h2>
+        <form method="post" asp-page-handler="New">
+            <input asp-for="NewWeapon.Item" placeholder="Item" />
+            <input asp-for="NewWeapon.Bouns1" placeholder="Bonus1" />
+            <input asp-for="NewWeapon.Bouns1pct" placeholder="Bonus1%" />
+            <input asp-for="NewWeapon.Bouns2" placeholder="Bonus2" />
+            <input asp-for="NewWeapon.Bouns2pct" placeholder="Bonus2%" />
+            <input asp-for="NewWeapon.Quality" placeholder="Quality" />
+            <input asp-for="NewWeapon.Accuracy" placeholder="Accuracy" />
+            <input asp-for="NewWeapon.Damage" placeholder="Damage" />
+            <select asp-for="NewWeapon.Type">
+                <option value="">--Pick Type--</option>
+                <option>Primary</option>
+                <option>Secondary</option>
+                <option>Melee</option>
+            </select>
+            <select asp-for="NewWeapon.Lokation.Id" asp-items="Model.LocationOptions"></select>
+            <input asp-for="NewWeapon.Owner" placeholder="Owner" />
+            <button type="submit">Save</button>
+            <button type="button" onclick="closeOverlay()">Close</button>
+        </form>
+    </div>
+</div>
+
+<div id="overlayEdit" class="overlay" style="display:none;">
+    <div class="overlay-content">
+        <h2>Edit Weapon</h2>
+        <form method="post" asp-page-handler="Edit">
+            <input asp-for="SelectedForUpdate.Id" type="hidden" name="SelectedForUpdate.Id" />
+            <input asp-for="SelectedForUpdate.Item" placeholder="Item" />
+            <input asp-for="SelectedForUpdate.Bouns1" placeholder="Bonus1" />
+            <input asp-for="SelectedForUpdate.Bouns1pct" placeholder="Bonus1%" />
+            <input asp-for="SelectedForUpdate.Bouns2" placeholder="Bonus2" />
+            <input asp-for="SelectedForUpdate.Bouns2pct" placeholder="Bonus2%" />
+            <input asp-for="SelectedForUpdate.Quality" placeholder="Quality" />
+            <input asp-for="SelectedForUpdate.Accuracy" placeholder="Accuracy" />
+            <input asp-for="SelectedForUpdate.Damage" placeholder="Damage" />
+            <select asp-for="SelectedForUpdate.Type">
+                <option value="">--Pick Type--</option>
+                <option>Primary</option>
+                <option>Secondary</option>
+                <option>Melee</option>
+            </select>
+            <select asp-for="SelectedForUpdate.Lokation.Id" asp-items="Model.LocationOptions"></select>
+            <input asp-for="SelectedForUpdate.Owner" placeholder="Owner" />
+            <div class="row">
+                <button type="submit">Save</button>
+                <button type="button" onclick="closeEditOverlay()">Close</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="~/js/weapon.js" asp-append-version="true"></script>

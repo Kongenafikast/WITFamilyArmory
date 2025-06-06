@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WITFamilyArmory", "WITFamilyArmory\WITFamilyArmory.csproj", "{D02347EA-DDC7-4466-81D7-99B9FFF9A718}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D02347EA-DDC7-4466-81D7-99B9FFF9A718}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D02347EA-DDC7-4466-81D7-99B9FFF9A718}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D02347EA-DDC7-4466-81D7-99B9FFF9A718}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D02347EA-DDC7-4466-81D7-99B9FFF9A718}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {21B6EAD6-AF5E-4FC6-9729-DAA96595ED69}
+	EndGlobalSection
+EndGlobal

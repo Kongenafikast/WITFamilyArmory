@@ -1,0 +1,35 @@
+﻿@page
+@model WITFamilyArmory.Pages.factionModel
+@{
+    switch (Model.folder)
+    {
+        case "pr":
+            ViewData["Title"] = "Premier";
+            break;
+        case "mh":
+            ViewData["Title"] = "Mayhem";
+            break;
+        case "rev":
+            ViewData["Title"] = "Revelution";
+            break;
+        default:
+            break;
+    }
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>File Name</th>
+            <th>Link</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var file in Model.FileList)
+        {
+            <tr>
+                <td>@file.Name</td>
+                <td><a href="@file.Url">Report</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

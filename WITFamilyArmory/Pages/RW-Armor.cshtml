@@ -1,0 +1,141 @@
+﻿@page
+@model WITFamilyArmory.Pages.RW_ArmorModel
+@{
+    ViewData["Title"] = "Armor";
+}
+
+<h2>Armor List</h2>
+
+<div class="row">
+    <div class="col-10">
+        <form method="get">
+            <label>Item:</label>
+            <select asp-for="ItemFilter">
+                <option value="">All</option>
+                @foreach (var item in Model.ItemOptions)
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+
+            <button type="submit">Filter</button>
+        </form>
+    </div>
+    @if (Model.LoggedOn)
+    {
+        <div class="col-2" id="newBTNRow">
+            <a href="#" class="btn btn-light bollBtn" id="btnNewArmor">New</a>
+        </div>
+    }
+</div>
+
+<table class="table">
+    <thead>
+        @if (Model.LoggedOn)
+        {
+            <tr>
+                <th>Item</th>
+                <th>Bonus</th>
+                <th>Bonus in %</th>
+                <th>Location</th>
+                <th>Quality</th>
+                <th>Armor</th>
+                <th>Coverage</th>
+                <th>Action</th>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <th>Item</th>
+                <th>Bonus</th>
+                <th>Bonus in %</th>
+                <th>Location</th>
+                <th>Quality</th>
+                <th>Armor</th>
+                <th>Coverage</th>
+            </tr>
+        }
+    </thead>
+    <tbody>
+        @foreach (var armor in Model.FilteredArmors)
+        {
+            <tr>
+                @if (Model.LoggedOn)
+                {
+                    <td>
+                        <a href="#" class="armor-item"
+                           data-id="@armor.Id"
+                           data-item="@armor.Item"
+                           data-bonus="@armor.Bonus"
+                           data-bounspct="@armor.Bounspct"
+                           data-location="@armor.Lokation?.Id"
+                           data-quality="@armor.Quality"
+                           data-armorpct="@armor.ArmorPct"
+                           data-coverage="@armor.Coverage">
+                            @armor.Item
+                        </a>
+                    </td>
+                }
+                else
+                {
+                    <td>@armor.Item</td>
+                }
+                <td>@armor.Bonus</td>
+                <td>@armor.Bounspct</td>
+                <td>@armor.Lokation?.Name</td>
+                <td>@armor.Quality</td>
+                <td>@armor.ArmorPct</td>
+                <td>@armor.Coverage</td>
+                @if (Model.LoggedOn)
+                {
+                    <td>
+                        <form method="post" asp-page-handler="Delete" asp-route-idForDelete="@armor.Id">
+                            <input type="hidden" name="id" id="delete-id" />
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div id="overlayNew" class="overlay" style="display:none;">
+    <div class="overlay-content">
+        <h2>New Armor</h2>
+        <form method="post" asp-page-handler="New">
+            <input asp-for="NewArmor.Item" placeholder="Item" />
+            <input asp-for="NewArmor.Bonus" placeholder="Bonus" />
+            <input asp-for="NewArmor.Bounspct" placeholder="Bonus %" />
+            <select asp-for="NewArmor.Lokation.Id" asp-items="Model.LocationOptions"></select>
+            <input asp-for="NewArmor.Quality" placeholder="Quality" />
+            <input asp-for="NewArmor.ArmorPct" placeholder="Armor %" />
+            <input asp-for="NewArmor.Coverage" placeholder="Coverage" />
+            <button type="submit">Save</button>
+            <button type="button" onclick="closeOverlay()">Close</button>
+        </form>
+    </div>
+</div>
+
+<div id="overlayEdit" class="overlay" style="display:none;">
+    <div class="overlay-content">
+        <h2>Edit Armor</h2>
+        <form method="post" asp-page-handler="Edit">
+            <input asp-for="SelectedForUpdate.Id" type="hidden" name="SelectedForUpdate.Id" />
+            <input asp-for="SelectedForUpdate.Item" placeholder="Item" />
+            <input asp-for="SelectedForUpdate.Bonus" placeholder="Bonus" />
+            <input asp-for="SelectedForUpdate.Bounspct" placeholder="Bonus %" />
+            <select asp-for="SelectedForUpdate.Lokation.Id" asp-items="Model.LocationOptions"></select>
+            <input asp-for="SelectedForUpdate.Quality" placeholder="Quality" />
+            <input asp-for="SelectedForUpdate.ArmorPct" placeholder="Armor %" />
+            <input asp-for="SelectedForUpdate.Coverage" placeholder="Coverage" />
+            <div class="row">
+                <button type="submit">Save</button>
+                <button type="button" onclick="closeEditOverlay()">Close</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="~/js/armor.js" asp-append-version="true"></script>
+

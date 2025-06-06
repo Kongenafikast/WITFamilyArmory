@@ -1,0 +1,368 @@
+﻿@page
+@model WITFamilyArmory.Pages.ArmoryModel
+@{
+    switch (Model.typeOfArmory)
+    {
+        case "drugs":
+            ViewData["Title"] = "Drugs in armory";
+            break;
+        case "meds":
+            ViewData["Title"] = "Meds in armory";
+            break;
+        case "temps":
+            ViewData["Title"] = "Temps in armory";
+            break;
+        case "boost":
+            ViewData["Title"] = "Boosters in armory";
+            break;
+        default:
+            break;
+    }
+}
+
+@if (Model.TotalItems?.Count > 0)
+{
+    <h1>WIT - Armory total</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Quantity in Armories</th>
+                <th>Quantity in Displaycases</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.TotalItems.Values.OrderBy(i => i.Name))
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@(item.QuantityArmory != 0 ? item.QuantityArmory.ToString() : "")</td>
+                    <td>@(item.QuantityDisplay != 0 ? item.QuantityDisplay.ToString() : "")</td>
+                    <td>@(item.QuantityTotal != 0 ? item.QuantityTotal.ToString() : "")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (Model?.drugs?.Values?.Count > 0)
+{
+    @foreach (var drug in Model.drugs)
+    {
+        switch (drug.Key)
+        {
+            case "Pr":
+                <h1>PR - Armory</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+
+                            <th>Name</th>
+                            <th>Quantity</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in drug.Value.drugs)
+                        {
+
+                            <tr>
+                                <th>@item.name</th>
+                                <th>@item.quantity</th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                break;
+            case "Mh":
+                <h1>MH - Armory</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+
+                            <th>Name</th>
+                            <th>Quantity</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in drug.Value.drugs)
+                        {
+
+                            <tr>
+                                <th>@item.name</th>
+                                <th>@item.quantity</th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                break;
+            case "Rev":
+                <h1>REV - Armory</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+
+                            <th>Name</th>
+                            <th>Quantity</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in drug.Value.drugs)
+                        {
+
+                            <tr>
+                                <th>@item.name</th>
+                                <th>@item.quantity</th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                break;
+            default:
+                break;
+        }
+    }
+}
+else if (Model?.meds?.Values.Count > 0)
+{
+    @foreach (var meds in Model.meds)
+    {
+        switch (meds.Key)
+        {
+            case "Pr":
+                <h1>PR - Armory</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+
+                            <th>Name</th>
+                            <th>Quantity</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in meds.Value.medical)
+                        {
+
+                            <tr>
+                                <th>@item.name</th>
+                                <th>@item.quantity</th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                break;
+            case "Mh":
+                <h1>MH - Armory</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+
+                            <th>Name</th>
+                            <th>Quantity</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in meds.Value.medical)
+                        {
+
+                            <tr>
+                                <th>@item.name</th>
+                                <th>@item.quantity</th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                break;
+            case "Rev":
+                <h1>REV - Armory</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+
+                            <th>Name</th>
+                            <th>Quantity</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in meds.Value.medical)
+                        {
+
+                            <tr>
+                                <th>@item.name</th>
+                                <th>@item.quantity</th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                break;
+            default:
+                break;
+        }
+    }
+}
+else if (Model?.temps?.Values?.Count > 0)
+{
+    @foreach (var temp in Model.temps)
+    {
+        switch (temp.Key)
+        {
+            case "Pr":
+                <h1>PR - Armory</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+
+                            <th>Name</th>
+                            <th>Quantity</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in temp.Value.temporary)
+                        {
+
+                            <tr>
+                                <th>@item.name</th>
+                                <th>@item.quantity</th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                break;
+            case "Mh":
+                <h1>MH - Armory</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+
+                            <th>Name</th>
+                            <th>Quantity</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in temp.Value.temporary)
+                        {
+
+                            <tr>
+                                <th>@item.name</th>
+                                <th>@item.quantity</th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                break;
+            case "Rev":
+                <h1>REV - Armory</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+
+                            <th>Name</th>
+                            <th>Quantity</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in temp.Value.temporary)
+                        {
+
+                            <tr>
+                                <th>@item.name</th>
+                                <th>@item.quantity</th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                break;
+            default:
+                break;
+        }
+    }
+}
+else if (Model?.boosters?.Values?.Count > 0)
+{
+    @foreach (var booster in Model.boosters)
+    {
+        switch (booster.Key)
+        {
+            case "Pr":
+                <h1>PR - Armory</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+
+                            <th>Name</th>
+                            <th>Quantity</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in booster.Value.boosters)
+                        {
+
+                            <tr>
+                                <th>@item.name</th>
+                                <th>@item.quantity</th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                break;
+            case "Mh":
+                <h1>MH - Armory</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+
+                            <th>Name</th>
+                            <th>Quantity</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in booster.Value.boosters)
+                        {
+
+                            <tr>
+                                <th>@item.name</th>
+                                <th>@item.quantity</th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                break;
+            case "Rev":
+                <h1>REV - Armory</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+
+                            <th>Name</th>
+                            <th>Quantity</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in booster.Value.boosters)
+                        {
+
+                            <tr>
+                                <th>@item.name</th>
+                                <th>@item.quantity</th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                break;
+            default:
+                break;
+        }
+    }
+}
